@@ -53,6 +53,14 @@ class App extends Component {
     window.open(item.url)
   }
 
+  onScrollBottom = () => {
+    getWchatHot(type.id, 1).then((res) => {
+      this.handleResponse(res)
+    }).catch((err) => {
+      console.error(err)
+    })
+  }
+
   render() {
     return (
       <div style={Style.root}>
@@ -62,7 +70,8 @@ class App extends Component {
           <TitleList style={Style.titleList} 
             typeName={this.state.typeName} 
             list={this.state.pagebean.contentlist}
-            onTitleClick={this.onTitleClick}/>
+            onTitleClick={this.onTitleClick}
+            onScrollBottom={this.onScrollBottom}/>
         </div>
       </div>
     );
