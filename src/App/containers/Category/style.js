@@ -1,7 +1,8 @@
 const Style = {}
 Style.root = {
   display: 'flex',
-  flexDirection: 'column'
+  flexDirection: 'column',
+  width: 130,
 }
 
 Style.button = {
@@ -10,7 +11,7 @@ Style.button = {
   cursor: 'pointer',
   padding: '4px 20px',
   fontSize: 16,
-  marginRight: 15,
+  background: 'rgb(238, 238, 238)',
 }
 
 Style.buttonEnter = {

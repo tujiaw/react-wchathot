@@ -1,5 +1,6 @@
-const typeList = [
-    {"id":"19","name":"体育迷"},
+export const TYPELIST = [
+    {"id":"0","name":"热点"},
+    {"id":"1","name":"推荐"},
     {"id":"2","name":"段子手"},
     {"id":"3","name":"养生堂"},
     {"id":"4","name":"私房话"},
@@ -17,8 +18,14 @@ const typeList = [
     {"id":"16","name":"古今通"},
     {"id":"17","name":"学霸族"},
     {"id":"18","name":"星座控"},
-    {"id":"1","name":"推荐"},
-    {"id":"0","name":"热点"}
+    {"id":"19","name":"体育迷"}
 ];
 
-export default typeList
+export const getTypeId = (typeName) => {
+    for (const type of TYPELIST) {
+        if (type.name === typeName) {
+            return type.id
+        }
+    }
+    return -1
+}

@@ -1,14 +1,33 @@
 const Style = {}
 
+Style.root = {
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  background: '#fff',
+  paddingLeft: 10,
+}
+
 Style.typeName = {
-  margin: 5,
+  padding: 8,
   display: 'block',
+  borderBottom: '1px solid #f1f1f1'
 }
 
 Style.item = {
   display: 'flex',
-  margin: 5,
+  padding: 6,
   cursor: 'pointer',
+}
+
+Style.itemEnter = {
+  ...Style.item,
+  background: '#E5E5E5',
+}
+
+Style.itemLeave = {
+  ...Style.item,
+  background: '#fff',
 }
 
 Style.image = {
@@ -19,22 +38,27 @@ Style.image = {
 }
 
 Style.username = {
-  fontSize: 20
+  fontSize: 18
 }
 
 Style.title = {
-  fontSize: 16
+  fontSize: 15
 }
 
 Style.list = {
   overflowY: 'scroll',
-  height: '70vh',
 }
 
 Style.right = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-around',
+}
+
+Style.Fetching = {
+  display: 'flex',
+  justifyContent: 'center',
+  height: 20
 }
 
 export default Style

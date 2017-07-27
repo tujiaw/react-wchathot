@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Style from './style'
 import Category from './containers/Category'
 import TitleList from './containers/TitleList'
+import { getTypeId } from './constants/typeList'
 import { getWchatHot } from './utils/get'
 
 class App extends Component {
@@ -9,6 +10,7 @@ class App extends Component {
     super(props)
     this.state = {
       typeName: '',
+      isFetching: false,
       pagebean: {
         allNum: 0,
         allPages: 0,
@@ -20,13 +22,41 @@ class App extends Component {
   }
 
   handleResponse = (res) => {
+    this.setState({ isFetching: false })
     if (res.showapi_res_body && res.showapi_res_body.pagebean) {
-      const newPagebean = Object.assign({}, res.showapi_res_body.pagebean)
-      const newTypeName = newPagebean.contentlist.length ? newPagebean.contentlist[0].typeName : ''
+      let newPagebean = res.showapi_res_body.pagebean
+      let newContentlist = []
+      let curContentlist = this.state.pagebean.contentlist
+      for (const item of newPagebean.contentlist) {
+        if (item == null || item.userName == null || item.userName.length === 0 
+          || item.title == null || item.title.length === 0) {
+            console.log('filter:' + item)
+          continue
+        }
+        if (curContentlist.find(function(elem) {
+          return elem.title === item.title
+        })) {
+          console.log('filter repeat:' + item)
+          continue
+        }
+        newContentlist.push(item)
+      }
+      if (newContentlist.length === 0) {
+        return
+      }
+
+      const newTypeName = newContentlist[0].typeName
+      if (newTypeName === this.state.typeName) {
+        curContentlist = curContentlist.concat(newContentlist)
+      } else {
+        curContentlist = newContentlist
+      }
+      newPagebean.contentlist = curContentlist
+
       console.log(newPagebean)
-      this.setState({ 
+      this.setState({
         typeName: newTypeName,
-        pagebean: newPagebean 
+        pagebean: newPagebean
       })
     }
   }
@@ -40,8 +70,13 @@ class App extends Component {
   }
 
   onTypeClick = (type) => {
-    this.setState({ typeName: type.name })
-    getWchatHot(type.id, 1).then((res) => {
+    const id = getTypeId(type.name)
+    if (id < 0 || this.state.isFetching) {
+      return
+    }
+
+    this.setState({ isFetching: true})
+    getWchatHot(id, 1).then((res) => {
       this.handleResponse(res)
     }).catch((err) => {
       console.error(err)
@@ -54,7 +89,13 @@ class App extends Component {
   }
 
   onScrollBottom = () => {
-    getWchatHot(type.id, 1).then((res) => {
+    const id = getTypeId(this.state.typeName)
+    if (id < 0 || this.state.isFetching) {
+      return
+    }
+
+    this.setState({ isFetching: true })
+    getWchatHot(id, this.state.pagebean.currentPage + 1).then((res) => {
       this.handleResponse(res)
     }).catch((err) => {
       console.error(err)
@@ -64,11 +105,12 @@ class App extends Component {
   render() {
     return (
       <div style={Style.root}>
-        <h1 style={Style.title}>微信热门精选</h1>
+        <h2 style={Style.title}>微信热门精选</h2>
         <div style={Style.content}>
           <Category style={Style.category} onTypeClick={this.onTypeClick} />
           <TitleList style={Style.titleList} 
             typeName={this.state.typeName} 
+            isFetching={this.state.isFetching}
             list={this.state.pagebean.contentlist}
             onTitleClick={this.onTitleClick}
             onScrollBottom={this.onScrollBottom}/>

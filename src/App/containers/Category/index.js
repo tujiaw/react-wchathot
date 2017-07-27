@@ -1,5 +1,5 @@
 import React from 'react'
-import typeList from '../../constants/typeList'
+import { TYPELIST } from '../../constants/typeList'
 import Style from './style'
 
 class Item extends React.Component {
@@ -37,7 +37,7 @@ class Category extends React.Component {
   render() {
     return (
       <div style={Style.root}>
-        {typeList.map((item, index) => {
+        {TYPELIST.map((item, index) => {
           return <Item key={index} name={item.name} onClick={ this.onTypeClick.bind(this, item) } />
         })}
       </div>

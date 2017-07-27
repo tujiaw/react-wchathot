@@ -4,12 +4,39 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+
+    <meta name="referrer" content="never"> <!-- 反盗链 -->
+    <title>泊客网 - 文章精选</title>
+    <link href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <style rel="stylesheet">
+      body {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding-top: 60px;
+      }
+      .footer {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        justify-content: center;
+        background: rgb(238, 238, 238);
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .footer>a {
+        text-decoration: none;
+        color: #666;
+      }
+    </style>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -25,7 +52,46 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">泊客网</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">主页</a></li>
+            <li><a href="/archives">归档</a></li>
+            <li><a href="/about">关于</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">相关链接 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/wchathot.html">微信文章精选</a></li>
+                <li><a href="http://blog.csdn.net/tujiaw">CSDN Blog</a></li>
+                <li><a href="https://github.com/tujiaw">GitHub</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">工具</li>
+                <li><a href="http://123.57.244.170:3100/base64">base64编解码</a></li>
+                <li><a href="/upload.html">上传图片</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
     <div id="root"></div>
+    <footer class="footer navbar-fixed-bottom">
+      <a href="http://www.miitbeian.gov.cn/" target="_blank">鄂ICP备17003086号. Copyright © 2016. All Rights Reserved.&nbsp;</a> 
+      <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1262210412'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1262210412%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

@@ -58,5 +58,6 @@ export var showapiRequest = function(mainUrl, appId, appParams, callback) {
 
 export var getWchatHot = function(typeid, page) {
   const appParams = { typeId: typeid || 0, page: page || 1 }
+  console.log('get wchat hot:' + JSON.stringify(appParams))
   return showapiRequest('http://route.showapi.com/582-2', 17262, appParams)
 }

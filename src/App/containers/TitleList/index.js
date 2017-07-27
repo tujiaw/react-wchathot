@@ -26,14 +26,23 @@ class TitleList extends React.Component {
     this.refs.list.removeEventListener('scroll', this.onScrollHandle.bind(this))
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.typeName !== nextProps.typeName) {
+      this.refs.list.scrollTop = 0
+    }
+  }
+
+  componentPropswill
+
   render() {
     return (
-      <div>
+      <div style={Style.root}>
         <span style={Style.typeName}>{this.props.typeName}</span>
         <div style={Style.list} ref="list">
           {this.props.list.map((item, index) => {
             return <Item key={index} data={item} onClick={this.onTitleClick.bind(this, item)} />
           })}
+          <span style={Style.Fetching}>{this.props.isFetching ? '加载中..' : '加载更多' }</span>
         </div>
       </div>
     );
