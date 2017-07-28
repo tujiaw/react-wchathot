@@ -21,6 +21,21 @@ class App extends Component {
     }
   }
 
+  requestData = (typeName, page) => {
+    const id = getTypeId(typeName)
+    if (id < 0 || this.state.isFetching) {
+      return
+    }
+
+    this.setState({ isFetching: true})
+    getWchatHot(id, page).then((res) => {
+      this.handleResponse(res)
+    }).catch((err) => {
+      this.setState({ isFetching: false })
+      console.error(err)
+    })
+  }
+
   handleResponse = (res) => {
     this.setState({ isFetching: false })
     if (res.showapi_res_body && res.showapi_res_body.pagebean) {
@@ -62,25 +77,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    getWchatHot().then((res) => {
-      this.handleResponse(res)
-    }).catch((err) => {
-      console.error(err)
-    })
+    this.requestData('热点', 1)
   }
 
   onTypeClick = (type) => {
-    const id = getTypeId(type.name)
-    if (id < 0 || this.state.isFetching) {
-      return
-    }
-
-    this.setState({ isFetching: true})
-    getWchatHot(id, 1).then((res) => {
-      this.handleResponse(res)
-    }).catch((err) => {
-      console.error(err)
-    })
+    this.requestData(type.name, 1)
   }
 
   onTitleClick = (item) => {
@@ -89,23 +90,13 @@ class App extends Component {
   }
 
   onScrollBottom = () => {
-    const id = getTypeId(this.state.typeName)
-    if (id < 0 || this.state.isFetching) {
-      return
-    }
-
-    this.setState({ isFetching: true })
-    getWchatHot(id, this.state.pagebean.currentPage + 1).then((res) => {
-      this.handleResponse(res)
-    }).catch((err) => {
-      console.error(err)
-    })
+    this.requestData(this.state.typeName, this.state.pagebean.currentPage + 1)
   }
 
   render() {
     return (
       <div style={Style.root}>
-        <h2 style={Style.title}>微信热门精选</h2>
+        <h3 style={Style.title}>微信热门精选</h3>
         <div style={Style.content}>
           <Category style={Style.category} onTypeClick={this.onTypeClick} />
           <TitleList style={Style.titleList} 
