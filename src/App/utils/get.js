@@ -1,7 +1,7 @@
 import 'whatwg-fetch'
 import 'es6-promise'
 import md5 from 'md5'
-import { curDate, leftPad } from './tools'
+import { curDate } from './tools'
 
 export function get(url) {
   console.log('get url:' + url)
@@ -24,7 +24,7 @@ export function get(url) {
 }
 
 export var showapiRequest = function(mainUrl, appId, appParams, callback) {
-    var url = new String(mainUrl + '?');
+    var url = mainUrl + '?';
     var params = {
         showapi_appid: appId,
         showapi_timestamp: curDate(),
@@ -44,14 +44,15 @@ export var showapiRequest = function(mainUrl, appId, appParams, callback) {
 
     keys.sort();
     var sortResult = '';
-    keys.map(function(value) {
-        sortResult = sortResult + value + params[value];
-    });
+    for (const key of keys) {
+      sortResult = sortResult + key + params[key];
+    }
+
     var secret = '21b693f98bd64e71a9bdbb5f7c76659c';
     var sign = md5(sortResult + secret);
-    keys.map(function(value) {
-        url = url + value + '=' + params[value] + '&';
-    });
+    for (const key of keys) {
+      url = url + key + '=' + params[key] + '&';
+    }
     url = url + 'showapi_sign=' + sign;
     return get(url)
 };

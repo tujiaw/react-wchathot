@@ -11,12 +11,12 @@ class Item extends React.Component {
   }
 
   render() {
-    const { logo, title, userName, contentImg } = this.props.data
+    const { title, userName, contentImg } = this.props.data
     return (
       <div style={ this.state.isEnter ? Style.itemEnter : Style.itemLeave } onClick={ this.props.onClick } 
         onMouseEnter={ () => this.setState({ isEnter: true })}
         onMouseLeave={ () => this.setState({ isEnter: false })}>
-        <img style={Style.image} src={ QQURL + contentImg } />
+        <img style={Style.image} src={ QQURL + contentImg } alt=""/>
         <div style={Style.right}>
           <div style={Style.username}>{userName}</div>
           <div style={Style.title}>{title}</div>
@@ -55,8 +55,6 @@ class TitleList extends React.Component {
       this.refs.list.scrollTop = 0
     }
   }
-
-  componentPropswill
 
   render() {
     return (
