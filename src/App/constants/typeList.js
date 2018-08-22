@@ -29,3 +29,12 @@ export const getTypeId = (typeName) => {
     }
     return -1
 }
+
+export const getTypeName = (typeId) => {
+    for (const type of TYPELIST) {
+        if (type.id == typeId) {
+            return type.name
+        }
+    }
+    return ''
+}

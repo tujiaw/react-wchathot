@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import Style from './style'
 import Category from './containers/Category'
 import TitleList from './containers/TitleList'
-import { getTypeId } from './constants/typeList'
+import { getTypeName } from './constants/typeList'
 import { getWchatHot } from './utils/get'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      typeName: '',
+      typeId: 1,
       isFetching: false,
       pagebean: {
         allNum: 0,
@@ -21,13 +21,13 @@ class App extends Component {
     }
   }
 
-  requestData = (typeName, page) => {
-    const id = getTypeId(typeName)
+  requestData = (typeId, page) => {
+    const id = typeId;
     if (id < 0 || this.state.isFetching) {
       return
     }
 
-    this.setState({ isFetching: true})
+    this.setState({isFetching: true})
     getWchatHot(id, page).then((res) => {
       this.handleResponse(res)
     }).catch((err) => {
@@ -60,8 +60,8 @@ class App extends Component {
         return
       }
 
-      const newTypeName = newContentlist[0].typeName
-      if (newTypeName === this.state.typeName) {
+      const newTypeId = newContentlist[0].typeId
+      if (newTypeId == this.state.typeId) {
         curContentlist = curContentlist.concat(newContentlist)
       } else {
         curContentlist = newContentlist
@@ -70,18 +70,17 @@ class App extends Component {
 
       console.log(newPagebean)
       this.setState({
-        typeName: newTypeName,
         pagebean: newPagebean
       })
     }
   }
 
   componentDidMount() {
-    this.requestData('热点', 1)
+    this.requestData(this.state.typeId, 1)
   }
 
   onTypeClick = (type) => {
-    this.requestData(type.name, 1)
+    this.requestData(type.id, 1)
   }
 
   onTitleClick = (item) => {
@@ -90,17 +89,18 @@ class App extends Component {
   }
 
   onScrollBottom = () => {
-    this.requestData(this.state.typeName, this.state.pagebean.currentPage + 1)
+    this.requestData(this.state.typeId, this.state.pagebean.currentPage + 1)
   }
 
   render() {
+    const currentTypeName = getTypeName(this.state.typeId);
     return (
       <div style={Style.root}>
         <h3 style={Style.title}>微信热门精选</h3>
         <div style={Style.content}>
           <Category style={Style.category} onTypeClick={this.onTypeClick} />
           <TitleList style={Style.titleList} 
-            typeName={this.state.typeName} 
+            typeName={ currentTypeName } 
             isFetching={this.state.isFetching}
             list={this.state.pagebean.contentlist}
             onTitleClick={this.onTitleClick}
