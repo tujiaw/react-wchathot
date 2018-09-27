@@ -31,8 +31,10 @@ Style.itemLeave = {
 }
 
 Style.image = {
-  width: 60,
-  height: 60,
+  minWidth: 60,
+  minHeight: 60,
+  maxWidth: 60,
+  maxHeight: 60,
   borderRadius: 10,
   marginRight: 10,
 }

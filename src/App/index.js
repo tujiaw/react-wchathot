@@ -3,7 +3,7 @@ import Style from './style'
 import Category from './containers/Category'
 import TitleList from './containers/TitleList'
 import { getTypeName } from './constants/typeList'
-import { getWchatHot } from './utils/get'
+import { getWchatHot } from './utils/showapi'
 
 class App extends Component {
   constructor(props) {
