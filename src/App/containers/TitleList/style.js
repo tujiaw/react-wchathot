@@ -49,6 +49,7 @@ Style.title = {
 
 Style.list = {
   overflowY: 'scroll',
+  height:500,
 }
 
 Style.right = {
